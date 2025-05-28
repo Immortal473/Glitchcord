@@ -1,0 +1,480 @@
+/*
+ * Vencord Discord Theme - "Midnight Serenity"
+ *
+ * This theme aims for a clean, dark, and calming aesthetic for Discord.
+ * It uses a deep navy blue as the primary background, with subtle
+ * accent colors to highlight interactive elements and important information.
+ *
+ * How to use:
+ * 1. Open Vencord settings in Discord.
+ * 2. Navigate to the "Themes" section.
+ * 3. Click "Open Themes Folder" (or similar, depending on Vencord version).
+ * 4. Create a new `.css` file (e.g., `midnight-serenity.css`) in that folder.
+ * 5. Copy and paste this entire code into the new file.
+ * 6. Save the file and enable the theme in Vencord settings.
+ */
+
+/* --- Color Variables --- */
+/* These variables make it easy to customize the theme's colors. */
+:root {
+    --main-bg: #1a1e2b; /* Deep Navy Blue */
+    --secondary-bg: #212638; /* Slightly lighter navy for panels/cards */
+    --tertiary-bg: #2b3047; /* Even lighter for input fields, popups */
+    --accent-color: #6a99ff; /* Soft Blue for accents */
+    --hover-color: #4a6fa5; /* Darker blue for hover states */
+    --text-color: #e0e0e0; /* Light gray for main text */
+    --muted-text-color: #a0a0a0; /* Muted gray for secondary text */
+    --success-color: #4CAF50; /* Green for success messages */
+    --error-color: #f44336;   /* Red for error messages */
+    --border-color: #3a4055; /* Subtle border color */
+    --scrollbar-thumb: #4a6fa5; /* Scrollbar thumb color */
+    --scrollbar-track: #212638; /* Scrollbar track color */
+
+    /* --- Background Image Settings (Inspired by ClearVision) --- */
+    /* Uncomment and customize these lines to add a background image */
+    /* --background-image: url('https://placehold.co/1920x1080/000000/FFFFFF?text=Your+Background+Image'); */
+    /* --background-position: center; */
+    /* --background-size: cover; */
+    /* --background-attachment: fixed; */
+    /* --background-filter: brightness(0.7) contrast(1.2) saturate(1.1); /* Adjust as needed */
+
+    /* --- Rounded Corners (Inspired by Azurite) --- */
+    --avatar-radius: 50%; /* Default: 50% for circular, try 8px for rounded squares */
+    --server-radius: 10px; /* Default: 10px, try 50% for circular servers */
+    --message-radius: 8px; /* Default: 8px */
+
+    /* --- Status Colors (Inspired by ClearVision) --- */
+    --online-status-color: #43b581;
+    --idle-status-color: #faa61a;
+    --dnd-status-color: #f04747;
+    --streaming-status-color: #593695;
+    --offline-status-color: #747f8d;
+
+    /* --- Accessibility (Inspired by ClearVision) --- */
+    --focus-color: var(--accent-color); /* Outline color when tabbing through elements */
+
+    /* --- Home Icon (Inspired by Azurite and ClearVision) --- */
+    /* Uncomment and customize to change the Discord home icon */
+    /* --home-icon: url('https://i.imgur.com/kP6FFU5.png'); /* Example Azurite icon */
+    /* --home-icon-size: cover; */
+}
+
+/* --- General Body and Root Styles --- */
+body, #app-mount {
+    background-color: var(--main-bg) !important;
+    color: var(--text-color) !important;
+    font-family: 'Inter', sans-serif !important; /* Using Inter font */
+
+    /* Apply background image if set */
+    background-image: var(--background-image) !important;
+    background-position: var(--background-position) !important;
+    background-size: var(--background-size) !important;
+    background-attachment: var(--background-attachment) !important;
+    /* Applying filter to a top-level element might affect all content.
+       Consider applying to a specific background layer if issues arise. */
+    /* filter: var(--background-filter) !important; */
+}
+
+/* Apply background filter to a more appropriate layer if needed */
+.app-2rEoJg::before { /* This targets the main app container overlay */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-bg); /* Use main-bg for shading overlay */
+    opacity: 0.8; /* Adjust opacity for background visibility */
+    z-index: -1; /* Place behind content */
+    filter: var(--background-filter); /* Apply filter here */
+    display: var(--background-image, none) == 'none' ? none : block; /* Only show if image is set */
+}
+
+
+/* --- Scrollbar Styling --- */
+/* Custom scrollbar for a cleaner look */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
+/* --- Server List --- */
+.wrapper-1_G9Qc, .guilds-1SWgZJ {
+    background-color: var(--main-bg) !important;
+}
+
+.guilds-1SWgZJ .guild-1SWgZJ {
+    border-radius: var(--server-radius) !important; /* Use server radius variable */
+}
+
+.guilds-1SWgZJ .guild-1SWgZJ.selected-1_G9Qc,
+.guilds-1SWgZJ .guild-1SWgZJ:hover {
+    background-color: var(--hover-color) !important;
+}
+
+/* --- Home Icon Styling --- */
+.homeIcon-2QJ_YF {
+    background-image: var(--home-icon) !important;
+    background-size: var(--home-icon-size) !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+/* --- Channel List (Sidebar) --- */
+.sidebar-1tnWFu {
+    background-color: var(--secondary-bg) !important;
+    border-right: 1px solid var(--border-color) !important;
+}
+
+.channels-Ie2l6A .channel-1S0KVS {
+    color: var(--muted-text-color) !important;
+    border-radius: 6px !important;
+    margin: 2px 8px !important;
+    padding: 6px 8px !important;
+}
+
+.channels-Ie2l6A .channel-1S0KVS:hover {
+    background-color: var(--hover-color) !important;
+    color: var(--text-color) !important;
+}
+
+.channels-Ie2l6A .channel-1S0KVS.selected-1_G9Qc {
+    background-color: var(--accent-color) !important;
+    color: white !important;
+}
+
+.header-2o-2hj { /* Channel list header (e.g., "Text Channels") */
+    color: var(--muted-text-color) !important;
+}
+
+/* --- Chat Area (Main Content) --- */
+.chat-3NbVjC {
+    background-color: var(--main-bg) !important;
+}
+
+/* Message Background */
+.message-2qnXI9 {
+    background-color: transparent !important; /* Keep messages transparent by default */
+    padding: 4px 8px !important;
+    border-radius: var(--message-radius) !important; /* Use message radius variable */
+}
+
+.message-2qnXI9.cozyMessage-3V1C_D:hover {
+    background-color: var(--secondary-bg) !important; /* Highlight on hover */
+}
+
+/* Message content */
+.messageContent-2qWWV3 {
+    color: var(--text-color) !important;
+}
+
+/* Timestamp */
+.timestamp-p1C_K_ {
+    color: var(--muted-text-color) !important;
+}
+
+/* Username */
+.headerText-3U0_5D .username-1A8gKq {
+    color: var(--accent-color) !important; /* Make usernames stand out */
+}
+
+/* --- Chat Input Bar --- */
+.form-2gU3fW, .textArea-2Spzkt {
+    background-color: var(--tertiary-bg) !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    padding: 8px 12px !important;
+}
+
+.placeholder-36uKxR {
+    color: var(--muted-text-color) !important;
+}
+
+/* --- User List (Right Sidebar) --- */
+.members-1998pB {
+    background-color: var(--secondary-bg) !important;
+    border-left: 1px solid var(--border-color) !important;
+}
+
+.members-1998pB .member-3-g9Xe {
+    color: var(--muted-text-color) !important;
+    border-radius: 6px !important;
+    margin: 2px 8px !important;
+    padding: 6px 8px !important;
+}
+
+.members-1998pB .member-3-g9Xe:hover {
+    background-color: var(--hover-color) !important;
+    color: var(--text-color) !important;
+}
+
+.members-1998pB .member-3-g9Xe.selected-1_G9Qc {
+    background-color: var(--accent-color) !important;
+    color: white !important;
+}
+
+/* --- Popups and Modals --- */
+.modal-1UGD9L, .popout-2sKjmi {
+    background-color: var(--tertiary-bg) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    color: var(--text-color) !important;
+}
+
+/* --- Buttons --- */
+.button-38aScr {
+    background-color: var(--accent-color) !important;
+    color: white !important;
+    border-radius: 6px !important;
+    padding: 8px 16px !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.button-38aScr:hover {
+    background-color: var(--hover-color) !important;
+}
+
+.button-38aScr.lookFilled-1G9Z5b.colorGrey-2iYg-A { /* Secondary buttons */
+    background-color: var(--secondary-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.button-38aScr.lookFilled-1G9Z5b.colorGrey-2iYg-A:hover {
+    background-color: var(--hover-color) !important;
+}
+
+/* --- Links --- */
+a {
+    color: var(--accent-color) !important;
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: underline !important;
+}
+
+/* --- Code Blocks --- */
+.markup-2BOw-j code, .markup-2BOw-j pre {
+    background-color: #151824 !important; /* Even darker for code */
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+    color: #b3e0ff !important; /* Light blue for code text */
+}
+
+/* --- Unread Indicators --- */
+.unread-1xRYgK {
+    background-color: var(--accent-color) !important;
+}
+
+/* --- Mentions --- */
+.wrapper-3Nf-pA.mention-3Nf-pA {
+    background-color: rgba(106, 153, 255, 0.2) !important; /* Light accent background for mentions */
+    color: var(--accent-color) !important;
+    border-radius: 4px !important;
+    padding: 0 4px !important;
+}
+
+/* --- Embeds --- */
+.embed-IeV_3X {
+    background-color: var(--secondary-bg) !important;
+    border-left: 4px solid var(--accent-color) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+}
+
+.embed-IeV_3X .embedTitle-32Q4-V {
+    color: var(--accent-color) !important;
+}
+
+.embed-IeV_3X .embedDescription-1u_kY_ {
+    color: var(--text-color) !important;
+}
+
+/* --- User Popouts (Profile Cards) --- */
+.userPopout-2j1gM6 {
+    background-color: var(--secondary-bg) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.header-2o-2hj.header-2o-2hj.header-2o-2hj { /* Specificity for user popout header */
+    background-color: var(--accent-color) !important;
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+}
+
+/* --- Settings Panels --- */
+.sidebar-1tnWFu.settings-1tnWFu { /* Settings sidebar */
+    background-color: var(--secondary-bg) !important;
+}
+
+.content-1SgpWY.settings-1SgpWY { /* Settings main content */
+    background-color: var(--main-bg) !important;
+}
+
+.card-3Qj_iC { /* Settings cards/sections */
+    background-color: var(--secondary-bg) !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* --- Input Fields (General) --- */
+.input-2g-EW5, .input-2g-EW5:focus {
+    background-color: var(--tertiary-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    color: var(--text-color) !important;
+}
+
+.input-2g-EW5::placeholder {
+    color: var(--muted-text-color) !important;
+}
+
+/* --- Tooltips --- */
+.tooltip-2Qf-uE {
+    background-color: var(--tertiary-bg) !important;
+    color: var(--text-color) !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* --- DMs List --- */
+.privateChannels-1nO1ee {
+    background-color: var(--secondary-bg) !important;
+}
+
+.privateChannels-1nO1ee .channel-1S0KVS {
+    color: var(--muted-text-color) !important;
+    border-radius: 6px !important;
+    margin: 2px 8px !important;
+    padding: 6px 8px !important;
+}
+
+.privateChannels-1nO1ee .channel-1S0KVS:hover {
+    background-color: var(--hover-color) !important;
+    color: var(--text-color) !important;
+}
+
+.privateChannels-1nO1ee .channel-1S0KVS.selected-1_G9Qc {
+    background-color: var(--accent-color) !important;
+    color: white !important;
+}
+
+/* --- User Panel (Bottom Left) --- */
+.panels-3g2psd {
+    background-color: var(--tertiary-bg) !important;
+    border-top: 1px solid var(--border-color) !important;
+    padding: 8px !important;
+}
+
+.panels-3g2psd .button-38aScr { /* Voice/Video/Settings buttons */
+    background-color: var(--secondary-bg) !important;
+    color: var(--text-color) !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+}
+
+.panels-3g2psd .button-38aScr:hover {
+    background-color: var(--hover-color) !important;
+}
+
+/* --- Voice/Video Channels --- */
+.container-1_G9Qc.voice-1_G9Qc {
+    background-color: var(--secondary-bg) !important;
+    border-radius: 8px !important;
+    margin: 4px 8px !important;
+    padding: 8px !important;
+}
+
+.container-1_G9Qc.voice-1_G9Qc .name-1_G9Qc {
+    color: var(--accent-color) !important;
+}
+
+/* --- Mentions Popout --- */
+.recentMentionsPopout-1b4l_V {
+    background-color: var(--secondary-bg) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* --- Search Bar --- */
+.searchBar-3Tn07V {
+    background-color: var(--tertiary-bg) !important;
+    border-radius: 6px !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+}
+
+.searchBar-3Tn07V input {
+    color: var(--text-color) !important;
+}
+
+.searchBar-3Tn07V .placeholder-36uKxR {
+    color: var(--muted-text-color) !important;
+}
+
+/* --- Custom Status Input --- */
+.customStatus-18f_oE .input-2g-EW5 {
+    background-color: var(--tertiary-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    color: var(--text-color) !important;
+}
+
+/* --- General Text and Headers --- */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color) !important;
+}
+
+/* Ensure all text is readable */
+.text-xs, .text-sm, .text-base, .text-lg, .text-xl, .text-2xl {
+    color: var(--text-color) !important;
+}
+
+/* --- Avatar and Status Indicators --- */
+/* Apply avatar radius */
+.avatar-1BDn8e, .avatar-3Q_c_B {
+    border-radius: var(--avatar-radius) !important;
+}
+
+/* Status colors */
+.status-1_G9Qc.statusOnline-2uQ_1D {
+    background-color: var(--online-status-color) !important;
+}
+.status-1_G9Qc.statusIdle-1_G9Qc {
+    background-color: var(--idle-status-color) !important;
+}
+.status-1_G9Qc.statusDnd-1_G9Qc {
+    background-color: var(--dnd-status-color) !important;
+}
+.status-1_G9Qc.statusStreaming-1_G9Qc {
+    background-color: var(--streaming-status-color) !important;
+}
+.status-1_G9Qc.statusOffline-1_G9Qc {
+    background-color: var(--offline-status-color) !important;
+}
+
+/* --- Focus Outline --- */
+/* Apply focus color to interactive elements when tab-navigating */
+*:focus-visible {
+    outline: 2px solid var(--focus-color) !important;
+    outline-offset: 2px !important;
+}
