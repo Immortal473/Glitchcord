@@ -1,15 +1,20 @@
 /*
- * Vencord Discord Theme - "Midnight Serenity Enhanced"
+ * Vencord Discord Theme - "Midnight Serenity Enhanced - Color & Background Refresh"
  *
  * This theme is an enhanced version combining the deep, calming dark aesthetic
  * of "Midnight Serenity" with the vibrant accents and structural elements
  * from Azurite and the robust background and button styling from ClearVision.
  *
+ * This version features:
+ * - A new deep indigo and vibrant magenta-pink color palette.
+ * - Active ClearVision-style background image with customizable properties.
+ * - Retained Azurite font and rounded corner styles.
+ *
  * How to use:
  * 1. Open Vencord settings in Discord.
  * 2. Navigate to the "Themes" section.
  * 3. Click "Open Themes Folder" (or similar, depending on Vencord version).
- * 4. Create a new `.css` file (e.g., `midnight-serenity-enhanced.css`) in that folder.
+ * 4. Create a new `.css` file (e.g., `midnight-serenity-refresh.css`) in that folder.
  * 5. Copy and paste this entire code into the new file.
  * 6. Save the file and enable the theme in Vencord settings.
  */
@@ -17,35 +22,34 @@
 /* --- Import Fonts (from Azurite) --- */
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
-/* --- Color Variables (Combined & Enhanced) --- */
+/* --- Color Variables (Refreshed Palette) --- */
 :root {
-    /* Azurite-inspired Base Colors */
-    --main-bg: #040429;      /* Azurite's --azurite-bg: Deepest background */
-    --secondary-bg: #121236; /* Azurite's --azurite-bg2: Slightly lighter for panels/cards */
-    --tertiary-bg: #2b3047;  /* Existing: Even lighter for input fields, popups */
+    /* New Deep Indigo & Magenta-Pink Palette */
+    --main-bg: #1A1A2E;      /* Deep Indigo */
+    --secondary-bg: #2C2C47; /* Slightly lighter indigo for panels/cards */
+    --tertiary-bg: #3E3E60;  /* Even lighter for input fields, popups */
 
-    /* Azurite-inspired Accent & Link Colors */
-    --accent-color: #8bffcf; /* Azurite's --azurite-links: Primary accent for links, selected states */
-    --azurite-secondary-accent: #24CC89; /* Azurite's --azurite-sec: Secondary accent, e.g., for success */
-    --hover-color: #4a6fa5;  /* Existing: Darker blue for hover states, adjusted for new palette */
+    /* Accent & Link Colors */
+    --accent-color: #E94560; /* Vibrant Magenta-Pink for primary accents */
+    --azurite-secondary-accent: #00B8A9; /* Complementary Teal/Cyan for secondary accents (e.g., success) */
+    --hover-color: #6C5B7B;  /* Muted purple for hover states */
 
     /* Text & UI Colors */
-    --text-color: #e0e0e0;   /* Light gray for main text */
-    --muted-text-color: #a0a0a0; /* Muted gray for secondary text */
+    --text-color: #F0F0F0;   /* Light gray for main text */
+    --muted-text-color: #B0B0B0; /* Muted gray for secondary text */
     --success-color: var(--azurite-secondary-accent); /* Green for success messages (from Azurite) */
-    --error-color: #f44336;  /* Red for error messages */
-    --border-color: #3a4055; /* Subtle border color */
-    --scrollbar-thumb: #4a6fa5; /* Scrollbar thumb color */
-    --scrollbar-track: #212638; /* Scrollbar track color */
+    --error-color: #F44336;  /* Red for error messages */
+    --border-color: #4A4A6E; /* Subtle border color */
+    --scrollbar-thumb: #E94560; /* Scrollbar thumb color, matching accent */
+    --scrollbar-track: #2C2C47; /* Scrollbar track color, matching secondary bg */
 
-    /* --- Background Image Settings (from ClearVision) --- */
-    /* Uncomment and customize these lines to add a background image */
-    /* --background-image: url('https://clearvision.github.io/images/sapphire.jpg'); */
-    /* --background-position: center; */
-    /* --background-size: cover; */
-    /* --background-attachment: fixed; */
-    /* --background-filter: saturate(calc(var(--saturation-factor, 1) * 1)); /* ClearVision default filter */
-    /* --background-shading-opacity: 0.6; /* Adjust opacity of the main-bg overlay on top of image */
+    /* --- Background Image Settings (from ClearVision - now active) --- */
+    --background-image: url('https://placehold.co/1920x1080/1A1A2E/E94560?text=Vencord+Theme'); /* Placeholder image */
+    --background-position: center;
+    --background-size: cover;
+    --background-attachment: fixed;
+    --background-filter: saturate(calc(var(--saturation-factor, 1) * 1)) brightness(0.8) contrast(1.1); /* ClearVision default filter with slight adjustments */
+    --background-shading-opacity: 0.6; /* Adjust opacity of the main-bg overlay on top of image */
 
     /* --- Rounded Corners (from Azurite) --- */
     --avatar-radius: 5px;    /* Azurite's --avatar-radius */
@@ -304,7 +308,7 @@ a:hover {
 
 /* --- Mentions --- */
 .wrapper-3Nf-pA.mention-3Nf-pA {
-    background-color: rgba(139, 255, 207, 0.2) !important; /* Light accent background for mentions (based on new accent) */
+    background-color: rgba(233, 69, 96, 0.2) !important; /* Light accent background for mentions (based on new accent) */
     color: var(--accent-color) !important;
     border-radius: 4px !important;
     padding: 0 4px !important;
@@ -497,4 +501,11 @@ h1, h2, h3, h4, h5, h6 {
     outline: 2px solid var(--focus-color) !important;
     outline-offset: 2px !important;
 }
+
+
+
+
+
+
+
 
