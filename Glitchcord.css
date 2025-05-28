@@ -1,30 +1,58 @@
 /*
- * Vencord Discord Theme - "Midnight Serenity Enhanced - Color & Background Refresh"
+ * Vencord Discord Theme - "Hyper-Sensory Overload"
  *
- * This theme is an enhanced version combining the deep, calming dark aesthetic
- * of "Midnight Serenity" with the vibrant accents and structural elements
- * from Azurite and the robust background and button styling from ClearVision.
+ * This theme takes "Midnight Serenity Enhanced" to the extreme,
+ * incorporating intricate animations, gradients, complex shadows,
+ * and dynamic hover effects across nearly every Discord UI element.
+ * It aims for a visually intense and "crazy" user experience,
+ * while retaining the ClearVision background and the deep indigo
+ * and vibrant magenta-pink color palette.
  *
  * This version features:
  * - A new deep indigo and vibrant magenta-pink color palette.
  * - Active ClearVision-style background image with customizable properties.
  * - Retained Azurite font and rounded corner styles.
+ * - Extensive animations, gradients, and complex visual effects.
  *
  * How to use:
  * 1. Open Vencord settings in Discord.
  * 2. Navigate to the "Themes" section.
  * 3. Click "Open Themes Folder" (or similar, depending on Vencord version).
- * 4. Create a new `.css` file (e.g., `midnight-serenity-refresh.css`) in that folder.
+ * 4. Create a new `.css` file (e.g., `hyper-sensory-overload.css`) in that folder.
  * 5. Copy and paste this entire code into the new file.
  * 6. Save the file and enable the theme in Vencord settings.
+ *
+ * Warning: This theme uses extensive CSS animations and complex styles,
+ * which may impact performance on older or less powerful systems.
  */
 
 /* --- Import Fonts (from Azurite) --- */
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
+/* --- Keyframe Animations --- */
+/* Subtle pulsing glow for active elements */
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 5px var(--accent-color); }
+    50% { box-shadow: 0 0 15px var(--accent-color), 0 0 25px var(--accent-color); }
+    100% { box-shadow: 0 0 5px var(--accent-color); }
+}
+
+/* Background gradient shift for dynamic elements */
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Subtle background movement for main app */
+@keyframes background-pan {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
 /* --- Color Variables (Refreshed Palette) --- */
 :root {
-    /* New Deep Indigo & Magenta-Pink Palette */
+    /* New Deep Indigo & Vibrant Magenta-Pink Palette */
     --main-bg: #1A1A2E;      /* Deep Indigo */
     --secondary-bg: #2C2C47; /* Slightly lighter indigo for panels/cards */
     --tertiary-bg: #3E3E60;  /* Even lighter for input fields, popups */
@@ -33,6 +61,7 @@
     --accent-color: #E94560; /* Vibrant Magenta-Pink for primary accents */
     --azurite-secondary-accent: #00B8A9; /* Complementary Teal/Cyan for secondary accents (e.g., success) */
     --hover-color: #6C5B7B;  /* Muted purple for hover states */
+    --active-color: #FF6B6B; /* Brighter red for active/pressed states */
 
     /* Text & UI Colors */
     --text-color: #F0F0F0;   /* Light gray for main text */
@@ -80,12 +109,14 @@ body, #app-mount {
     background-color: var(--main-bg) !important;
     color: var(--text-color) !important;
     font-family: var(--font) !important;
+    overflow: hidden; /* Prevent scrollbars from main app */
 
     /* Apply background image if set (ClearVision approach) */
     background-image: var(--background-image) !important;
     background-position: var(--background-position) !important;
     background-size: var(--background-size) !important;
-    background-attachment: var(--background-attachment) !important;
+    background-attachment: fixed !important; /* Ensure fixed attachment */
+    animation: background-pan 60s linear infinite alternate !important; /* Slow, subtle background movement */
 }
 
 /* Background shading overlay (from ClearVision) */
@@ -97,96 +128,176 @@ body, #app-mount {
     width: 100%;
     height: 100%;
     background-color: var(--main-bg); /* Use main-bg for shading overlay */
-    opacity: var(--background-shading-opacity, 0.8) !important; /* Customizable opacity */
+    opacity: var(--background-shading-opacity, 0.6) !important; /* Customizable opacity */
     z-index: -1; /* Place behind content */
     filter: var(--background-filter); /* Apply filter here */
-    /* Only show if background image is set, otherwise let main-bg handle it */
     display: var(--background-image, none) == 'none' ? none : block;
+    pointer-events: none; /* Ensure it doesn't block interactions */
 }
 
-/* --- Scrollbar Styling --- */
+/* --- Scrollbar Styling (More prominent) --- */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 12px; /* Wider scrollbar */
+    height: 12px;
 }
 
 ::-webkit-scrollbar-track {
     background: var(--scrollbar-track);
-    border-radius: 10px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3); /* Inner shadow for depth */
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb);
-    border-radius: 10px;
+    background: linear-gradient(45deg, var(--accent-color), var(--hover-color)); /* Gradient thumb */
+    border-radius: 12px;
+    border: 2px solid var(--secondary-bg); /* Border around thumb */
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-color);
+    background: linear-gradient(45deg, var(--active-color), var(--accent-color)); /* Brighter gradient on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
-/* --- Server List --- */
+/* --- Server List (Dynamic & Animated) --- */
 .wrapper-1_G9Qc, .guilds-1SWgZJ {
-    background-color: var(--main-bg) !important;
+    background: linear-gradient(to bottom, var(--main-bg), var(--secondary-bg)) !important; /* Gradient background */
+    box-shadow: 5px 0 15px rgba(0,0,0,0.5); /* Stronger shadow */
+    transition: all 0.3s ease;
 }
 
 .guilds-1SWgZJ .guild-1SWgZJ {
-    border-radius: var(--server-radius) !important; /* Use server radius variable */
+    border-radius: var(--server-radius) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-radius 0.2s ease;
+    position: relative; /* For pseudo-elements */
+    overflow: hidden; /* For glow effect */
 }
 
-.guilds-1SWgZJ .guild-1SWgZJ.selected-1_G9Qc,
+.guilds-1SWgZJ .guild-1SWgZJ::before { /* Pseudo-element for subtle glow */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
 .guilds-1SWgZJ .guild-1SWgZJ:hover {
     background-color: var(--hover-color) !important;
+    transform: scale(1.1) rotate(5deg) !important; /* Scale and rotate on hover */
+    box-shadow: 0 0 20px var(--accent-color); /* Stronger glow on hover */
+    border-radius: 50% !important; /* Round on hover */
+    z-index: 10; /* Bring to front */
 }
 
-/* --- Home Icon Styling --- */
+.guilds-1SWgZJ .guild-1SWgZJ:hover::before {
+    opacity: 1;
+}
+
+.guilds-1SWgZJ .guild-1SWgZJ.selected-1_G9Qc {
+    background: linear-gradient(45deg, var(--accent-color), var(--active-color)) !important; /* Gradient for selected */
+    transform: scale(1.05) !important;
+    box-shadow: 0 0 25px var(--accent-color), 0 0 40px var(--active-color); /* Intense glow */
+    animation: pulse-glow 2s infinite alternate; /* Pulsing animation */
+    border-radius: 50% !important; /* Always round when selected */
+}
+
+/* --- Home Icon Styling (Animated) --- */
 .homeIcon-2QJ_YF {
     background-image: var(--home-icon) !important;
     background-size: var(--home-icon-size) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-/* --- Channel List (Sidebar) --- */
+.homeIcon-2QJ_YF:hover {
+    transform: scale(1.2) rotate(360deg); /* Spin on hover */
+    filter: drop-shadow(0 0 10px var(--accent-color)); /* Glow effect */
+}
+
+/* --- Channel List (Sidebar - Animated & Layered) --- */
 .sidebar-1tnWFu {
-    background-color: var(--secondary-bg) !important;
-    border-right: 1px solid var(--border-color) !important;
+    background: linear-gradient(to right, var(--secondary-bg), var(--main-bg)) !important;
+    border-right: 2px solid var(--border-color) !important;
+    box-shadow: inset -5px 0 15px rgba(0,0,0,0.4); /* Inner shadow */
+    transition: all 0.3s ease;
 }
 
 .channels-Ie2l6A .channel-1S0KVS {
     color: var(--muted-text-color) !important;
-    border-radius: 6px !important;
-    margin: 2px 8px !important;
-    padding: 6px 8px !important;
+    border-radius: 8px !important; /* Slightly more rounded */
+    margin: 4px 10px !important;
+    padding: 8px 12px !important;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.channels-Ie2l6A .channel-1S0KVS::before { /* Animated background on hover */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--hover-color), transparent);
+    transition: left 0.3s ease;
+    z-index: -1;
 }
 
 .channels-Ie2l6A .channel-1S0KVS:hover {
-    background-color: var(--hover-color) !important;
     color: var(--text-color) !important;
+    transform: translateX(5px) scale(1.02); /* Slide and slightly enlarge */
+    box-shadow: 0 0 10px rgba(var(--accent-color), 0.5);
+}
+
+.channels-Ie2l6A .channel-1S0KVS:hover::before {
+    left: 0; /* Slide in background */
 }
 
 .channels-Ie2l6A .channel-1S0KVS.selected-1_G9Qc {
-    background-color: var(--accent-color) !important;
-    color: var(--main-bg) !important; /* Text color on selected channel */
+    background: linear-gradient(90deg, var(--accent-color), var(--active-color)) !important;
+    color: var(--main-bg) !important;
+    font-weight: bold !important;
+    transform: translateX(0) scale(1.03);
+    box-shadow: 0 0 15px var(--accent-color);
+    animation: pulse-glow 2.5s infinite alternate;
 }
 
-.header-2o-2hj { /* Channel list header (e.g., "Text Channels") */
+.header-2o-2hj {
     color: var(--muted-text-color) !important;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Subtle text shadow */
 }
 
-/* --- Chat Area (Main Content) --- */
+/* --- Chat Area (Main Content - Dynamic Messages) --- */
 .chat-3NbVjC {
     background-color: var(--main-bg) !important;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Message Background */
 .message-2qnXI9 {
-    background-color: transparent !important; /* Keep messages transparent by default */
-    padding: 4px 8px !important;
-    border-radius: var(--message-radius) !important; /* Use message radius variable */
+    background-color: transparent !important;
+    padding: 6px 10px !important;
+    border-radius: var(--message-radius) !important;
+    margin-bottom: 8px !important;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow */
 }
 
 .message-2qnXI9.cozyMessage-3V1C_D:hover {
-    background-color: var(--secondary-bg) !important; /* Highlight on hover */
+    background: linear-gradient(90deg, var(--secondary-bg), transparent) !important; /* Gradient on hover */
+    transform: translateY(-2px) scale(1.005); /* Lift and slightly enlarge */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
 }
 
 /* Message content */
@@ -197,253 +308,469 @@ body, #app-mount {
 /* Timestamp */
 .timestamp-p1C_K_ {
     color: var(--muted-text-color) !important;
+    font-size: 0.8em;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.message-2qnXI9:hover .timestamp-p1C_K_ {
+    opacity: 1;
+    text-shadow: 0 0 5px var(--accent-color); /* Glow on hover */
 }
 
 /* Username */
 .headerText-3U0_5D .username-1A8gKq {
-    color: var(--accent-color) !important; /* Make usernames stand out */
+    color: var(--accent-color) !important;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(var(--accent-color), 0.3); /* Subtle glow */
+    transition: text-shadow 0.3s ease, transform 0.2s ease;
 }
 
-/* --- Chat Input Bar --- */
+.headerText-3U0_5D .username-1A8gKq:hover {
+    text-shadow: 0 0 15px var(--accent-color); /* Stronger glow on hover */
+    transform: translateX(2px);
+}
+
+/* --- Chat Input Bar (Interactive) --- */
 .form-2gU3fW, .textArea-2Spzkt {
     background-color: var(--tertiary-bg) !important;
-    border-radius: 8px !important;
-    border: 1px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    border: 2px solid var(--border-color) !important;
     color: var(--text-color) !important;
-    padding: 8px 12px !important;
+    padding: 10px 15px !important;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.form-2gU3fW:focus-within, .textArea-2Spzkt:focus-within {
+    border-color: var(--accent-color) !important;
+    box-shadow: inset 0 0 15px rgba(var(--accent-color), 0.5), 0 0 20px rgba(var(--accent-color), 0.4); /* Intense focus glow */
+    transform: scale(1.005);
 }
 
 .placeholder-36uKxR {
     color: var(--muted-text-color) !important;
+    transition: color 0.3s ease;
 }
 
-/* --- User List (Right Sidebar) --- */
+.form-2gU3fW:focus-within .placeholder-36uKxR {
+    color: var(--accent-color) !important; /* Change placeholder color on focus */
+}
+
+/* --- User List (Right Sidebar - Animated) --- */
 .members-1998pB {
-    background-color: var(--secondary-bg) !important;
-    border-left: 1px solid var(--border-color) !important;
+    background: linear-gradient(to left, var(--secondary-bg), var(--main-bg)) !important;
+    border-left: 2px solid var(--border-color) !important;
+    box-shadow: inset 5px 0 15px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
 }
 
 .members-1998pB .member-3-g9Xe {
     color: var(--muted-text-color) !important;
-    border-radius: 6px !important;
-    margin: 2px 8px !important;
-    padding: 6px 8px !important;
+    border-radius: 8px !important;
+    margin: 4px 10px !important;
+    padding: 8px 12px !important;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.members-1998pB .member-3-g9Xe::before { /* Animated background on hover */
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(270deg, transparent, var(--hover-color), transparent);
+    transition: right 0.3s ease;
+    z-index: -1;
 }
 
 .members-1998pB .member-3-g9Xe:hover {
-    background-color: var(--hover-color) !important;
     color: var(--text-color) !important;
+    transform: translateX(-5px) scale(1.02); /* Slide and slightly enlarge */
+    box-shadow: 0 0 10px rgba(var(--accent-color), 0.5);
+}
+
+.members-1998pB .member-3-g9Xe:hover::before {
+    right: 0; /* Slide in background */
 }
 
 .members-1998pB .member-3-g9Xe.selected-1_G9Qc {
-    background-color: var(--accent-color) !important;
-    color: var(--main-bg) !important; /* Text color on selected member */
+    background: linear-gradient(270deg, var(--accent-color), var(--active-color)) !important;
+    color: var(--main-bg) !important;
+    font-weight: bold !important;
+    transform: translateX(0) scale(1.03);
+    box-shadow: 0 0 15px var(--accent-color);
+    animation: pulse-glow 2.5s infinite alternate;
 }
 
-/* --- Popups and Modals --- */
+/* --- Popups and Modals (Elevated & Animated) --- */
 .modal-1UGD9L, .popout-2sKjmi {
-    background-color: var(--tertiary-bg) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(135deg, var(--tertiary-bg), var(--secondary-bg)) !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(var(--accent-color), 0.3); /* Stronger, glowing shadow */
     color: var(--text-color) !important;
+    border: 1px solid var(--accent-color); /* Accent border */
+    transform: scale(0.95); /* Start slightly smaller */
+    animation: fadeInScale 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Pop-in animation */
+    overflow: hidden; /* For inner glow */
 }
 
-/* --- Buttons (ClearVision inspired) --- */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-1UGD9L::before, .popout-2sKjmi::before { /* Inner glow effect */
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(var(--accent-color), 0.1) 0%, transparent 70%);
+    animation: gradient-shift 15s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+/* --- Buttons (Highly Interactive) --- */
+.button-38aScr {
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    transition: all 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.button-38aScr::before { /* Hover shimmer effect */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    transform: skewX(-30deg);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.button-38aScr:hover::before {
+    left: 100%;
+}
+
 .button-38aScr.lookFilled-1G9Z5b.colorBrand-2M3O9g { /* Primary brand buttons */
-    background-color: var(--accent-color) !important;
-    color: var(--main-bg) !important; /* Dark text on bright button */
-    border-radius: 6px !important;
-    padding: 8px 16px !important;
-    transition: background-color 0.2s ease !important;
+    background: linear-gradient(45deg, var(--accent-color), var(--active-color)) !important;
+    color: var(--main-bg) !important;
+    box-shadow: 0 5px 15px rgba(var(--accent-color), 0.4);
 }
 
 .button-38aScr.lookFilled-1G9Z5b.colorBrand-2M3O9g:hover {
-    background-color: var(--hover-color) !important;
+    background: linear-gradient(45deg, var(--active-color), var(--accent-color)) !important;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(var(--accent-color), 0.6);
 }
 
 .button-38aScr.lookFilled-1G9Z5b.colorGrey-2iYg-A { /* Secondary grey buttons */
-    background-color: var(--secondary-bg) !important;
+    background: linear-gradient(45deg, var(--secondary-bg), var(--tertiary-bg)) !important;
     color: var(--text-color) !important;
-    border: 1px solid var(--border-color) !important;
+    border: 2px solid var(--border-color) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .button-38aScr.lookFilled-1G9Z5b.colorGrey-2iYg-A:hover {
-    background-color: var(--hover-color) !important;
+    background: linear-gradient(45deg, var(--tertiary-bg), var(--secondary-bg)) !important;
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.4);
 }
 
 .button-38aScr.lookFilled-1G9Z5b.colorRed-3Q0cZJ { /* Danger/Red buttons */
-    background-color: var(--error-color) !important;
+    background: linear-gradient(45deg, var(--error-color), #FF0000) !important;
     color: white !important;
+    box-shadow: 0 5px 15px rgba(var(--error-color), 0.4);
+}
+
+.button-38aScr.lookFilled-1G9Z5b.colorRed-3Q0cZJ:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(var(--error-color), 0.6);
 }
 
 .button-38aScr.lookFilled-1G9Z5b.colorGreen-2uG_1D { /* Success/Green buttons */
-    background-color: var(--success-color) !important;
+    background: linear-gradient(45deg, var(--success-color), #00E676) !important;
     color: white !important;
+    box-shadow: 0 5px 15px rgba(var(--success-color), 0.4);
 }
 
+.button-38aScr.lookFilled-1G9Z5b.colorGreen-2uG_1D:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(var(--success-color), 0.6);
+}
 
-/* --- Links --- */
+/* --- Links (Glowing) --- */
 a {
     color: var(--accent-color) !important;
     text-decoration: none !important;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 5px rgba(var(--accent-color), 0.3);
 }
 
 a:hover {
     text-decoration: underline !important;
+    color: var(--active-color) !important;
+    text-shadow: 0 0 10px var(--active-color), 0 0 20px rgba(var(--active-color), 0.5);
+    transform: translateY(-1px);
 }
 
-/* --- Code Blocks --- */
+/* --- Code Blocks (Cyberpunk feel) --- */
 .markup-2BOw-j code, .markup-2BOw-j pre {
-    background-color: #151824 !important; /* Even darker for code */
-    border: 1px solid var(--border-color) !important;
-    border-radius: 6px !important;
-    padding: 4px 8px !important;
-    color: #b3e0ff !important; /* Light blue for code text */
+    background-color: #0A0A1A !important; /* Even darker, almost black */
+    border: 2px solid var(--azurite-secondary-accent) !important; /* Teal border */
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    color: #00F0FF !important; /* Electric blue code text */
+    font-family: 'Consolas', 'Courier New', monospace !important; /* Monospace font */
+    box-shadow: inset 0 0 10px rgba(var(--azurite-secondary-accent), 0.5);
+    transition: all 0.3s ease;
 }
 
-/* --- Unread Indicators --- */
+.markup-2BOw-j pre:hover {
+    box-shadow: inset 0 0 15px rgba(var(--azurite-secondary-accent), 0.8), 0 0 20px rgba(var(--azurite-secondary-accent), 0.5);
+    transform: scale(1.01);
+}
+
+/* --- Unread Indicators (Pulsing) --- */
 .unread-1xRYgK {
     background-color: var(--accent-color) !important;
+    box-shadow: 0 0 10px var(--accent-color);
+    animation: pulse-glow 1.5s infinite alternate;
 }
 
-/* --- Mentions --- */
+/* --- Mentions (Vibrant) --- */
 .wrapper-3Nf-pA.mention-3Nf-pA {
-    background-color: rgba(233, 69, 96, 0.2) !important; /* Light accent background for mentions (based on new accent) */
-    color: var(--accent-color) !important;
-    border-radius: 4px !important;
-    padding: 0 4px !important;
+    background-color: rgba(233, 69, 96, 0.3) !important; /* More opaque background */
+    color: var(--text-color) !important; /* Make text readable */
+    border-radius: 6px !important;
+    padding: 2px 6px !important;
+    border: 1px solid var(--accent-color) !important;
+    box-shadow: 0 0 8px rgba(var(--accent-color), 0.5);
+    transition: all 0.2s ease;
 }
 
-/* --- Embeds --- */
+.wrapper-3Nf-pA.mention-3Nf-pA:hover {
+    background-color: rgba(233, 69, 96, 0.5) !important;
+    box-shadow: 0 0 15px var(--accent-color);
+    transform: translateY(-1px) scale(1.05);
+}
+
+/* --- Embeds (Structured & Animated) --- */
 .embed-IeV_3X {
-    background-color: var(--secondary-bg) !important;
-    border-left: 4px solid var(--accent-color) !important;
-    border-radius: 8px !important;
-    padding: 12px !important;
+    background: linear-gradient(180deg, var(--secondary-bg), #202035) !important; /* Gradient background */
+    border-left: 5px solid var(--accent-color) !important; /* Thicker accent border */
+    border-radius: 10px !important;
+    padding: 15px !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4), 0 0 10px rgba(var(--accent-color), 0.2);
+    transition: all 0.3s ease;
+}
+
+.embed-IeV_3X:hover {
+    transform: translateY(-3px) scale(1.005);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6), 0 0 20px rgba(var(--accent-color), 0.4);
 }
 
 .embed-IeV_3X .embedTitle-32Q4-V {
     color: var(--accent-color) !important;
+    text-shadow: 0 0 8px rgba(var(--accent-color), 0.5);
 }
 
 .embed-IeV_3X .embedDescription-1u_kY_ {
     color: var(--text-color) !important;
 }
 
-/* --- User Popouts (Profile Cards) --- */
+/* --- User Popouts (Profile Cards - Layered & Dynamic) --- */
 .userPopout-2j1gM6 {
-    background-color: var(--secondary-bg) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(to top right, var(--secondary-bg), var(--tertiary-bg)) !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(var(--accent-color), 0.5); /* Very strong shadow */
+    border: 2px solid var(--accent-color); /* Accent border */
+    position: relative;
+    overflow: hidden;
 }
 
-.header-2o-2hj.header-2o-2hj.header-2o-2hj { /* Specificity for user popout header */
-    background-color: var(--accent-color) !important;
-    border-top-left-radius: 12px !important;
-    border-top-right-radius: 12px !important;
+.userPopout-2j1gM6::before { /* Animated background shimmer */
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(var(--accent-color), 0.05),
+        rgba(var(--accent-color), 0.05) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+    animation: gradient-shift 30s linear infinite;
+    z-index: -1;
+    pointer-events: none;
 }
 
-/* --- Settings Panels --- */
-.sidebar-1tnWFu.settings-1tnWFu { /* Settings sidebar */
-    background-color: var(--secondary-bg) !important;
+.header-2o-2hj.header-2o-2hj.header-2o-2hj {
+    background: linear-gradient(90deg, var(--accent-color), var(--active-color)) !important;
+    border-top-left-radius: 13px !important;
+    border-top-right-radius: 13px !important;
+    color: white !important; /* Ensure text is visible */
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 }
 
-.content-1SgpWY.settings-1SgpWY { /* Settings main content */
+/* --- Settings Panels (Modern & Clean) --- */
+.sidebar-1tnWFu.settings-1tnWFu {
+    background: linear-gradient(to bottom, var(--secondary-bg), var(--main-bg)) !important;
+    border-right: 2px solid var(--border-color) !important;
+    box-shadow: inset -5px 0 15px rgba(0,0,0,0.4);
+}
+
+.content-1SgpWY.settings-1SgpWY {
     background-color: var(--main-bg) !important;
 }
 
-.card-3Qj_iC { /* Settings cards/sections */
-    background-color: var(--secondary-bg) !important;
-    border-radius: 8px !important;
+.card-3Qj_iC {
+    background: linear-gradient(135deg, var(--secondary-bg), #202035) !important;
+    border-radius: 10px !important;
     border: 1px solid var(--border-color) !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
 }
 
-/* --- Input Fields (General) --- */
+.card-3Qj_iC:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4), 0 0 10px rgba(var(--accent-color), 0.2);
+}
+
+/* --- Input Fields (General - Glowing) --- */
 .input-2g-EW5, .input-2g-EW5:focus {
     background-color: var(--tertiary-bg) !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 6px !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 8px !important;
     color: var(--text-color) !important;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.input-2g-EW5:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: inset 0 0 12px rgba(var(--accent-color), 0.5), 0 0 15px rgba(var(--accent-color), 0.4);
 }
 
 .input-2g-EW5::placeholder {
     color: var(--muted-text-color) !important;
 }
 
-/* --- Tooltips --- */
+/* --- Tooltips (Vibrant) --- */
 .tooltip-2Qf-uE {
-    background-color: var(--tertiary-bg) !important;
+    background: linear-gradient(45deg, var(--tertiary-bg), #4A4A6E) !important;
     color: var(--text-color) !important;
-    border-radius: 6px !important;
-    padding: 6px 10px !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(var(--accent-color), 0.3);
+    border: 1px solid var(--accent-color);
+    animation: fadeInScale 0.2s forwards;
 }
 
-/* --- DMs List --- */
+/* --- DMs List (Animated) --- */
 .privateChannels-1nO1ee {
     background-color: var(--secondary-bg) !important;
 }
 
 .privateChannels-1nO1ee .channel-1S0KVS {
     color: var(--muted-text-color) !important;
-    border-radius: 6px !important;
+    border-radius: 8px !important;
     margin: 2px 8px !important;
     padding: 6px 8px !important;
+    transition: all 0.2s ease;
 }
 
 .privateChannels-1nO1ee .channel-1S0KVS:hover {
     background-color: var(--hover-color) !important;
     color: var(--text-color) !important;
+    transform: translateX(3px);
 }
 
 .privateChannels-1nO1ee .channel-1S0KVS.selected-1_G9Qc {
-    background-color: var(--accent-color) !important;
+    background: linear-gradient(90deg, var(--accent-color), var(--active-color)) !important;
     color: var(--main-bg) !important;
+    font-weight: bold !important;
+    box-shadow: 0 0 10px var(--accent-color);
 }
 
-/* --- User Panel (Bottom Left) --- */
+/* --- User Panel (Bottom Left - Glowing) --- */
 .panels-3g2psd {
-    background-color: var(--tertiary-bg) !important;
-    border-top: 1px solid var(--border-color) !important;
-    padding: 8px !important;
+    background: linear-gradient(to top, var(--tertiary-bg), var(--secondary-bg)) !important;
+    border-top: 2px solid var(--border-color) !important;
+    padding: 10px !important;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.4);
 }
 
 .panels-3g2psd .button-38aScr { /* Voice/Video/Settings buttons */
-    background-color: var(--secondary-bg) !important;
+    background: var(--secondary-bg) !important;
     color: var(--text-color) !important;
-    border-radius: 6px !important;
-    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
 }
 
 .panels-3g2psd .button-38aScr:hover {
     background-color: var(--hover-color) !important;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.4);
 }
 
-/* --- Voice/Video Channels --- */
+/* --- Voice/Video Channels (Active State) --- */
 .container-1_G9Qc.voice-1_G9Qc {
     background-color: var(--secondary-bg) !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     margin: 4px 8px !important;
-    padding: 8px !important;
+    padding: 10px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
 }
 
 .container-1_G9Qc.voice-1_G9Qc .name-1_G9Qc {
     color: var(--accent-color) !important;
+    text-shadow: 0 0 5px rgba(var(--accent-color), 0.5);
 }
 
-/* --- Mentions Popout --- */
+/* --- Mentions Popout (Elevated) --- */
 .recentMentionsPopout-1b4l_V {
-    background-color: var(--secondary-bg) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(135deg, var(--secondary-bg), var(--tertiary-bg)) !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(var(--accent-color), 0.3);
+    border: 1px solid var(--accent-color);
 }
 
-/* --- Search Bar --- */
+/* --- Search Bar (Interactive) --- */
 .searchBar-3Tn07V {
     background-color: var(--tertiary-bg) !important;
-    border-radius: 6px !important;
-    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    border: 2px solid var(--border-color) !important;
     color: var(--text-color) !important;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.searchBar-3Tn07V:focus-within {
+    border-color: var(--accent-color) !important;
+    box-shadow: inset 0 0 12px rgba(var(--accent-color), 0.5), 0 0 15px rgba(var(--accent-color), 0.4);
 }
 
 .searchBar-3Tn07V input {
@@ -454,17 +781,25 @@ a:hover {
     color: var(--muted-text-color) !important;
 }
 
-/* --- Custom Status Input --- */
+/* --- Custom Status Input (Animated) --- */
 .customStatus-18f_oE .input-2g-EW5 {
     background-color: var(--tertiary-bg) !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 6px !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 8px !important;
     color: var(--text-color) !important;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.customStatus-18f_oE .input-2g-EW5:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: inset 0 0 12px rgba(var(--accent-color), 0.5), 0 0 15px rgba(var(--accent-color), 0.4);
 }
 
 /* --- General Text and Headers --- */
 h1, h2, h3, h4, h5, h6 {
     color: var(--text-color) !important;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5); /* Add shadow for depth */
 }
 
 /* Ensure all text is readable */
@@ -472,13 +807,23 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-color) !important;
 }
 
-/* --- Avatar and Status Indicators --- */
+/* --- Avatar and Status Indicators (Animated) --- */
 /* Apply avatar radius */
 .avatar-1BDn8e, .avatar-3Q_c_B {
     border-radius: var(--avatar-radius) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Status colors */
+.avatar-1BDn8e:hover, .avatar-3Q_c_B:hover {
+    transform: scale(1.1) rotate(5deg); /* Slight scale and rotation on hover */
+    box-shadow: 0 0 15px var(--accent-color); /* Glow on hover */
+}
+
+/* Status colors (with subtle pulse) */
+.status-1_G9Qc {
+    animation: pulse-glow 3s infinite alternate; /* Subtle pulse for all statuses */
+}
+
 .status-1_G9Qc.statusOnline-2uQ_1D {
     background-color: var(--online-status-color) !important;
 }
@@ -495,12 +840,14 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--offline-status-color) !important;
 }
 
-/* --- Focus Outline --- */
-/* Apply focus color to interactive elements when tab-navigating */
+/* --- Focus Outline (More Defined) --- */
 *:focus-visible {
-    outline: 2px solid var(--focus-color) !important;
-    outline-offset: 2px !important;
+    outline: 3px solid var(--focus-color) !important; /* Thicker outline */
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 5px rgba(var(--focus-color), 0.3); /* Outer glow */
+    transition: all 0.2s ease;
 }
+
 
 
 
