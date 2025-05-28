@@ -1,82 +1,91 @@
 /*
- * Vencord Discord Theme - "Midnight Serenity"
+ * Vencord Discord Theme - "Midnight Serenity Enhanced"
  *
- * This theme aims for a clean, dark, and calming aesthetic for Discord.
- * It uses a deep navy blue as the primary background, with subtle
- * accent colors to highlight interactive elements and important information.
+ * This theme is an enhanced version combining the deep, calming dark aesthetic
+ * of "Midnight Serenity" with the vibrant accents and structural elements
+ * from Azurite and the robust background and button styling from ClearVision.
  *
  * How to use:
  * 1. Open Vencord settings in Discord.
  * 2. Navigate to the "Themes" section.
  * 3. Click "Open Themes Folder" (or similar, depending on Vencord version).
- * 4. Create a new `.css` file (e.g., `midnight-serenity.css`) in that folder.
+ * 4. Create a new `.css` file (e.g., `midnight-serenity-enhanced.css`) in that folder.
  * 5. Copy and paste this entire code into the new file.
  * 6. Save the file and enable the theme in Vencord settings.
  */
 
-/* --- Color Variables --- */
-/* These variables make it easy to customize the theme's colors. */
+/* --- Import Fonts (from Azurite) --- */
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+/* --- Color Variables (Combined & Enhanced) --- */
 :root {
-    --main-bg: #1a1e2b; /* Deep Navy Blue */
-    --secondary-bg: #212638; /* Slightly lighter navy for panels/cards */
-    --tertiary-bg: #2b3047; /* Even lighter for input fields, popups */
-    --accent-color: #6a99ff; /* Soft Blue for accents */
-    --hover-color: #4a6fa5; /* Darker blue for hover states */
-    --text-color: #e0e0e0; /* Light gray for main text */
+    /* Azurite-inspired Base Colors */
+    --main-bg: #040429;      /* Azurite's --azurite-bg: Deepest background */
+    --secondary-bg: #121236; /* Azurite's --azurite-bg2: Slightly lighter for panels/cards */
+    --tertiary-bg: #2b3047;  /* Existing: Even lighter for input fields, popups */
+
+    /* Azurite-inspired Accent & Link Colors */
+    --accent-color: #8bffcf; /* Azurite's --azurite-links: Primary accent for links, selected states */
+    --azurite-secondary-accent: #24CC89; /* Azurite's --azurite-sec: Secondary accent, e.g., for success */
+    --hover-color: #4a6fa5;  /* Existing: Darker blue for hover states, adjusted for new palette */
+
+    /* Text & UI Colors */
+    --text-color: #e0e0e0;   /* Light gray for main text */
     --muted-text-color: #a0a0a0; /* Muted gray for secondary text */
-    --success-color: #4CAF50; /* Green for success messages */
-    --error-color: #f44336;   /* Red for error messages */
+    --success-color: var(--azurite-secondary-accent); /* Green for success messages (from Azurite) */
+    --error-color: #f44336;  /* Red for error messages */
     --border-color: #3a4055; /* Subtle border color */
     --scrollbar-thumb: #4a6fa5; /* Scrollbar thumb color */
     --scrollbar-track: #212638; /* Scrollbar track color */
 
-    /* --- Background Image Settings (Inspired by ClearVision) --- */
+    /* --- Background Image Settings (from ClearVision) --- */
     /* Uncomment and customize these lines to add a background image */
-    /* --background-image: url('https://placehold.co/1920x1080/000000/FFFFFF?text=Your+Background+Image'); */
+    /* --background-image: url('https://clearvision.github.io/images/sapphire.jpg'); */
     /* --background-position: center; */
     /* --background-size: cover; */
     /* --background-attachment: fixed; */
-    /* --background-filter: brightness(0.7) contrast(1.2) saturate(1.1); /* Adjust as needed */
+    /* --background-filter: saturate(calc(var(--saturation-factor, 1) * 1)); /* ClearVision default filter */
+    /* --background-shading-opacity: 0.6; /* Adjust opacity of the main-bg overlay on top of image */
 
-    /* --- Rounded Corners (Inspired by Azurite) --- */
-    --avatar-radius: 50%; /* Default: 50% for circular, try 8px for rounded squares */
-    --server-radius: 10px; /* Default: 10px, try 50% for circular servers */
-    --message-radius: 8px; /* Default: 8px */
+    /* --- Rounded Corners (from Azurite) --- */
+    --avatar-radius: 5px;    /* Azurite's --avatar-radius */
+    --server-radius: 5px;    /* Azurite's --server-radius */
+    --message-radius: 5px;   /* Azurite's --msg-bg-radius */
 
-    /* --- Status Colors (Inspired by ClearVision) --- */
+    /* --- Status Colors (from ClearVision) --- */
     --online-status-color: #43b581;
     --idle-status-color: #faa61a;
     --dnd-status-color: #f04747;
     --streaming-status-color: #593695;
     --offline-status-color: #747f8d;
 
-    /* --- Accessibility (Inspired by ClearVision) --- */
+    /* --- Accessibility (from ClearVision) --- */
     --focus-color: var(--accent-color); /* Outline color when tabbing through elements */
 
-    /* --- Home Icon (Inspired by Azurite and ClearVision) --- */
+    /* --- Home Icon (from Azurite) --- */
     /* Uncomment and customize to change the Discord home icon */
-    /* --home-icon: url('https://i.imgur.com/kP6FFU5.png'); /* Example Azurite icon */
+    /* --home-icon: url('https://i.imgur.com/kP6FFU5.png'); */
     /* --home-icon-size: cover; */
+
+    /* --- Font (from Azurite) --- */
+    --font: 'Righteous', cursive;
 }
 
 /* --- General Body and Root Styles --- */
 body, #app-mount {
     background-color: var(--main-bg) !important;
     color: var(--text-color) !important;
-    font-family: 'Inter', sans-serif !important; /* Using Inter font */
+    font-family: var(--font) !important;
 
-    /* Apply background image if set */
+    /* Apply background image if set (ClearVision approach) */
     background-image: var(--background-image) !important;
     background-position: var(--background-position) !important;
     background-size: var(--background-size) !important;
     background-attachment: var(--background-attachment) !important;
-    /* Applying filter to a top-level element might affect all content.
-       Consider applying to a specific background layer if issues arise. */
-    /* filter: var(--background-filter) !important; */
 }
 
-/* Apply background filter to a more appropriate layer if needed */
-.app-2rEoJg::before { /* This targets the main app container overlay */
+/* Background shading overlay (from ClearVision) */
+.app-2rEoJg::before {
     content: "";
     position: absolute;
     top: 0;
@@ -84,15 +93,14 @@ body, #app-mount {
     width: 100%;
     height: 100%;
     background-color: var(--main-bg); /* Use main-bg for shading overlay */
-    opacity: 0.8; /* Adjust opacity for background visibility */
+    opacity: var(--background-shading-opacity, 0.8) !important; /* Customizable opacity */
     z-index: -1; /* Place behind content */
     filter: var(--background-filter); /* Apply filter here */
-    display: var(--background-image, none) == 'none' ? none : block; /* Only show if image is set */
+    /* Only show if background image is set, otherwise let main-bg handle it */
+    display: var(--background-image, none) == 'none' ? none : block;
 }
 
-
 /* --- Scrollbar Styling --- */
-/* Custom scrollbar for a cleaner look */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -154,7 +162,7 @@ body, #app-mount {
 
 .channels-Ie2l6A .channel-1S0KVS.selected-1_G9Qc {
     background-color: var(--accent-color) !important;
-    color: white !important;
+    color: var(--main-bg) !important; /* Text color on selected channel */
 }
 
 .header-2o-2hj { /* Channel list header (e.g., "Text Channels") */
@@ -225,7 +233,7 @@ body, #app-mount {
 
 .members-1998pB .member-3-g9Xe.selected-1_G9Qc {
     background-color: var(--accent-color) !important;
-    color: white !important;
+    color: var(--main-bg) !important; /* Text color on selected member */
 }
 
 /* --- Popups and Modals --- */
@@ -236,20 +244,20 @@ body, #app-mount {
     color: var(--text-color) !important;
 }
 
-/* --- Buttons --- */
-.button-38aScr {
+/* --- Buttons (ClearVision inspired) --- */
+.button-38aScr.lookFilled-1G9Z5b.colorBrand-2M3O9g { /* Primary brand buttons */
     background-color: var(--accent-color) !important;
-    color: white !important;
+    color: var(--main-bg) !important; /* Dark text on bright button */
     border-radius: 6px !important;
     padding: 8px 16px !important;
     transition: background-color 0.2s ease !important;
 }
 
-.button-38aScr:hover {
+.button-38aScr.lookFilled-1G9Z5b.colorBrand-2M3O9g:hover {
     background-color: var(--hover-color) !important;
 }
 
-.button-38aScr.lookFilled-1G9Z5b.colorGrey-2iYg-A { /* Secondary buttons */
+.button-38aScr.lookFilled-1G9Z5b.colorGrey-2iYg-A { /* Secondary grey buttons */
     background-color: var(--secondary-bg) !important;
     color: var(--text-color) !important;
     border: 1px solid var(--border-color) !important;
@@ -258,6 +266,17 @@ body, #app-mount {
 .button-38aScr.lookFilled-1G9Z5b.colorGrey-2iYg-A:hover {
     background-color: var(--hover-color) !important;
 }
+
+.button-38aScr.lookFilled-1G9Z5b.colorRed-3Q0cZJ { /* Danger/Red buttons */
+    background-color: var(--error-color) !important;
+    color: white !important;
+}
+
+.button-38aScr.lookFilled-1G9Z5b.colorGreen-2uG_1D { /* Success/Green buttons */
+    background-color: var(--success-color) !important;
+    color: white !important;
+}
+
 
 /* --- Links --- */
 a {
@@ -285,7 +304,7 @@ a:hover {
 
 /* --- Mentions --- */
 .wrapper-3Nf-pA.mention-3Nf-pA {
-    background-color: rgba(106, 153, 255, 0.2) !important; /* Light accent background for mentions */
+    background-color: rgba(139, 255, 207, 0.2) !important; /* Light accent background for mentions (based on new accent) */
     color: var(--accent-color) !important;
     border-radius: 4px !important;
     padding: 0 4px !important;
@@ -375,7 +394,7 @@ a:hover {
 
 .privateChannels-1nO1ee .channel-1S0KVS.selected-1_G9Qc {
     background-color: var(--accent-color) !important;
-    color: white !important;
+    color: var(--main-bg) !important;
 }
 
 /* --- User Panel (Bottom Left) --- */
@@ -478,3 +497,4 @@ h1, h2, h3, h4, h5, h6 {
     outline: 2px solid var(--focus-color) !important;
     outline-offset: 2px !important;
 }
+
