@@ -1,5 +1,5 @@
 /*
- * Vencord Discord Theme - "Hyper-Sensory Overload 2.0: Absolute Chaos (with ClearVision Base)"
+ * Vencord Discord Theme - "Hyper-Sensory Overload 2.0: Absolute Chaos (with Bounce, Collapsible Sidebars & Borders)"
  *
  * This theme takes Azurite and ClearVision's fusion to an extreme,
  * introducing a completely new, vibrant, and highly animated aesthetic.
@@ -12,6 +12,8 @@
  * - Every possible animation applied: rapid glows, shifting gradients,
  * aggressive transforms, glitch effects, pulsating backgrounds,
  * rainbow borders, and more.
+ * - NEW: Subtle "bounce" animation applied to various text elements.
+ * - NEW: Collapsible sidebars and refined border treatments.
  * - Intensified visual feedback on hover, active, and focus states.
  * - Optimized for maximum visual impact, but may significantly impact performance.
  *
@@ -19,7 +21,7 @@
  * 1. Open Vencord settings in Discord.
  * 2. Navigate to the "Themes" section.
  * 3. Click "Open Themes Folder" (or similar, depending on Vencord version).
- * 4. Create a new `.css` file (e.g., `absolute-chaos-cv.css`) in that folder.
+ * 4. Create a new `.css` file (e.g., `absolute-chaos-bounce-collapsible.css`) in that folder.
  * 5. Copy and paste this entire code into the new file.
  * 6. Save the file and enable the theme in Vencord settings.
  *
@@ -104,6 +106,14 @@
   100% { transform: rotate(0deg); }
 }
 
+/* NEW: Bounce animation for text */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-3px); } /* Slight lift */
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-1px); } /* Smaller lift */
+}
+
 /* --- Color Variables (New Chaotic Neon Palette) --- */
 :root {
     /* Core Backgrounds - Deep, Graded Cyberpunk Tones */
@@ -138,6 +148,11 @@
     --avatar-radius: 5px;
     --server-radius: 5px;
     --message-radius: 5px;
+
+    /* New variables for collapsible sidebars and borders */
+    --app-border-frame: #00FFFF; /* Example, adjust to your theme's primary border color */
+    --radius-md: 8px; /* Example medium border radius */
+
 
     /* --- Status Colors (Neon version) --- */
     --online-status-color: #00FF00; /* Neon Green */
@@ -189,7 +204,7 @@ body, #app-mount {
     display: var(--background-image, none) == 'none' ? none : block;
     pointer-events: none;
     /* Adding subtle static/noise effect */
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB2aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZmlsdGVyIGlkPSJub2lzZSI+CiAgICA8ZnJUdXJidWJsZW5kIGJhc2VFeXBlbmN5PSIwLjYiIG51bOctGF2ZXM9IjIiIHN0aXRjaFRpbGVzPSJub1N0aXRjaCIvPgogIDwvc2VmdGVyPgogIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZSkib3BhY2l0eT0iMC4xIi8+Cjwvc3ZnPg==');
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZmlsdGVyIGlkPSJub2lzZSI+CiAgICA8ZnJUdXJidWxlbmQgYmFzZUV5cGVuY3k9IjAuNiIgbnVtT2N0YXZlcz0iMiIgc3RpdGNoVGlsZXM9Im5vU3RpdGNoIi8+CiAgPC9maWx0ZXI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC4xIi8+Cjwvc3ZnPg==');
     background-size: 100px 100px; /* Adjust size for finer/coarser noise */
     animation: noise-animation 0.5s steps(2) infinite alternate; /* Fast noise animation */
 }
@@ -314,7 +329,7 @@ body, #app-mount {
     position: relative;
     overflow: hidden;
     z-index: 1;
-    animation: flicker 0.8s infinite alternate; /* Subtle flicker */
+    animation: flicker 0.8s infinite alternate, bounce 1.5s infinite; /* Subtle flicker, now with bounce */
 }
 
 .channels-Ie2l6A .channel-1S0KVS::before { /* Animated background on hover */
@@ -347,14 +362,14 @@ body, #app-mount {
     font-weight: bold !important;
     transform: translateX(0) scale(1.08) !important;
     box-shadow: 0 0 30px var(--accent-color), 0 0 50px var(--secondary-accent) !important;
-    animation: pulse-glow 0.6s infinite alternate, glitch 0.3s infinite alternate; /* Very fast pulse and glitch */
+    animation: pulse-glow 0.6s infinite alternate, glitch 0.3s infinite alternate, bounce 1.2s infinite; /* Very fast pulse, glitch, and bounce */
     border-image: var(--border-color) 1;
 }
 
 .header-2o-2hj {
     color: var(--text-color) !important;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
-    animation: flicker 1s infinite alternate; /* Header flicker */
+    animation: flicker 1s infinite alternate, bounce 1.8s infinite; /* Header flicker, now with bounce */
 }
 
 /* --- Chat Area (Main Content - Reactive Messages) --- */
@@ -387,19 +402,20 @@ body, #app-mount {
     animation: glitch 0.2s infinite alternate; /* Rapid glitch on hover */
 }
 
-/* Message content (Subtle text flicker) */
+/* Message content (Subtle text flicker, now with bounce) */
 .messageContent-2qWWV3 {
     color: var(--text-color) !important;
-    animation: flicker 0.6s infinite alternate;
+    animation: flicker 0.6s infinite alternate, bounce 1.7s infinite; /* Now with bounce */
 }
 
-/* Timestamp (Intense glow on hover) */
+/* Timestamp (Intense glow on hover, now with bounce) */
 .timestamp-p1C_K_ {
     color: var(--muted-text-color) !important;
     font-size: 0.9em;
     opacity: 0.9;
     transition: opacity 0.1s ease, text-shadow 0.1s ease;
     font-family: var(--pixel-font); /* Pixel font for timestamps */
+    animation: bounce 1.9s infinite; /* Now with bounce */
 }
 
 .message-2qnXI9:hover .timestamp-p1C_K_ {
@@ -408,13 +424,13 @@ body, #app-mount {
     animation: flicker 0.1s infinite alternate; /* Rapid flicker on hover */
 }
 
-/* Username (Extreme Glow & Transform) */
+/* Username (Extreme Glow & Transform, now with bounce) */
 .headerText-3U0_5D .username-1A8gKq {
     color: var(--accent-color) !important;
     font-weight: bold;
     text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--secondary-accent); /* Double glow */
     transition: all 0.1s ease;
-    animation: pulse-glow 1s infinite alternate; /* Constant pulse */
+    animation: pulse-glow 1s infinite alternate, bounce 1.6s infinite; /* Constant pulse, now with bounce */
 }
 
 .headerText-3U0_5D .username-1A8gKq:hover {
@@ -446,7 +462,7 @@ body, #app-mount {
     color: var(--muted-text-color) !important;
     transition: color 0.1s ease;
     font-family: var(--pixel-font);
-    animation: flicker 0.5s infinite alternate;
+    animation: flicker 0.5s infinite alternate, bounce 1.4s infinite; /* Now with bounce */
 }
 
 .form-2gU3fW:focus-within .placeholder-36uKxR {
@@ -472,7 +488,7 @@ body, #app-mount {
     position: relative;
     overflow: hidden;
     z-index: 1;
-    animation: flicker 0.8s infinite alternate; /* Subtle flicker */
+    animation: flicker 0.8s infinite alternate, bounce 1.5s infinite; /* Subtle flicker, now with bounce */
 }
 
 .members-1998pB .member-3-g9Xe::before { /* Animated background on hover */
@@ -505,7 +521,7 @@ body, #app-mount {
     font-weight: bold !important;
     transform: translateX(0) scale(1.08) !important;
     box-shadow: 0 0 30px var(--accent-color), 0 0 50px var(--secondary-accent) !important;
-    animation: pulse-glow 0.6s infinite alternate, glitch 0.3s infinite alternate; /* Very fast pulse and glitch */
+    animation: pulse-glow 0.6s infinite alternate, glitch 0.3s infinite alternate, bounce 1.2s infinite; /* Very fast pulse, glitch, and bounce */
     border-image: var(--border-color) 1;
 }
 
@@ -514,7 +530,6 @@ body, #app-mount {
     background: var(--tertiary-bg) !important;
     border-radius: 20px !important; /* More rounded */
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(var(--accent-color), 0.6); /* Extreme shadow & glow */
-    color: var(--text-color) !important;
     border: 3px solid var(--accent-color);
     transform: scale(0.8); /* Start much smaller */
     animation: fadeInScale 0.2s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275), pulse-glow 3s infinite alternate, wiggle 0.8s infinite alternate; /* Fast pop-in, constant pulse, constant wiggle */
@@ -584,13 +599,13 @@ body, #app-mount {
     box-shadow: 0 12px 30px rgba(var(--accent-color), 0.8), 0 0 40px rgba(var(--secondary-accent), 0.7); /* Blinding glow */
 }
 
-/* --- Links (Extreme Glow & Flicker) --- */
+/* --- Links (Extreme Glow & Flicker, now with bounce) --- */
 a {
     color: var(--accent-color) !important;
     text-decoration: none !important;
     transition: all 0.1s ease;
     text-shadow: 0 0 10px rgba(var(--accent-color), 0.5);
-    animation: flicker 0.5s infinite alternate; /* Constant link flicker */
+    animation: flicker 0.5s infinite alternate, bounce 1.3s infinite; /* Constant link flicker, now with bounce */
 }
 
 a:hover {
@@ -601,7 +616,7 @@ a:hover {
     animation: glitch 0.2s infinite alternate; /* Glitch on hover */
 }
 
-/* --- Code Blocks (Hyper-Vibrant & Glitchy) --- */
+/* --- Code Blocks (Hyper-Vibrant & Glitchy, now with bounce) --- */
 .markup-2BOw-j code, .markup-2BOw-j pre {
     background-color: #000000 !important; /* Pure black background */
     border: 3px solid var(--success-color) !important; /* Neon green border */
@@ -611,7 +626,7 @@ a:hover {
     font-family: 'Consolas', 'Courier New', monospace !important;
     box-shadow: inset 0 0 15px rgba(var(--success-color), 0.8);
     transition: all 0.1s ease;
-    animation: pulse-glow 2s infinite alternate, flicker 0.3s infinite alternate; /* Pulse and flicker */
+    animation: pulse-glow 2s infinite alternate, flicker 0.3s infinite alternate, bounce 1.8s infinite; /* Pulse, flicker, now with bounce */
 }
 
 .markup-2BOw-j pre:hover {
@@ -627,7 +642,7 @@ a:hover {
     animation: pulse-glow 0.5s infinite alternate, glitch 0.1s infinite alternate; /* Rapid pulse and glitch */
 }
 
-/* --- Mentions (Blinding & Animated) --- */
+/* --- Mentions (Blinding & Animated, now with bounce) --- */
 .wrapper-3Nf-pA.mention-3Nf-pA {
     background-color: rgba(0, 255, 255, 0.4) !important; /* More opaque, neon cyan */
     color: var(--text-color) !important;
@@ -636,7 +651,7 @@ a:hover {
     border: 2px solid var(--accent-color) !important;
     box-shadow: 0 0 15px rgba(var(--accent-color), 0.7);
     transition: all 0.1s ease;
-    animation: flicker 0.4s infinite alternate;
+    animation: flicker 0.4s infinite alternate, bounce 1.6s infinite; /* Now with bounce */
 }
 
 .wrapper-3Nf-pA.mention-3Nf-pA:hover {
@@ -646,7 +661,7 @@ a:hover {
     animation: glitch 0.1s infinite alternate; /* Rapid glitch */
 }
 
-/* --- Embeds (Highly Structured & Constantly Shifting) --- */
+/* --- Embeds (Highly Structured & Constantly Shifting, now with bounce) --- */
 .embed-IeV_3X {
     background: linear-gradient(180deg, var(--secondary-bg), #202035) !important;
     border-left: 8px solid var(--accent-color) !important; /* Much thicker accent border */
@@ -654,7 +669,7 @@ a:hover {
     padding: 20px !important;
     box-shadow: 0 8px 25px rgba(0,0,0,0.6), 0 0 20px rgba(var(--accent-color), 0.5);
     transition: all 0.1s ease;
-    animation: pulse-glow 3s infinite alternate; /* Subtle constant pulse */
+    animation: pulse-glow 3s infinite alternate, bounce 2s infinite; /* Subtle constant pulse, now with bounce */
 }
 
 .embed-IeV_3X:hover {
@@ -667,12 +682,12 @@ a:hover {
 .embed-IeV_3X .embedTitle-32Q4-V {
     color: var(--accent-color) !important;
     text-shadow: 0 0 15px rgba(var(--accent-color), 0.8);
-    animation: flicker 0.3s infinite alternate;
+    animation: flicker 0.3s infinite alternate, bounce 1.7s infinite; /* Now with bounce */
 }
 
 .embed-IeV_3X .embedDescription-1u_kY_ {
     color: var(--text-color) !important;
-    animation: flicker 0.4s infinite alternate;
+    animation: flicker 0.4s infinite alternate, bounce 1.9s infinite; /* Now with bounce */
 }
 
 /* --- User Popouts (Profile Cards - Ultimate Chaos) --- */
@@ -742,7 +757,7 @@ a:hover {
     animation: glitch 0.3s infinite alternate;
 }
 
-/* --- Input Fields (General - Blinding Focus) --- */
+/* --- Input Fields (General - Blinding Focus, now with bounce) --- */
 .input-2g-EW5, .input-2g-EW5:focus {
     background-color: #000000 !important; /* Pure black input */
     border: 3px solid var(--border-color) !important;
@@ -751,7 +766,7 @@ a:hover {
     box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
     transition: all 0.1s ease;
     font-family: var(--pixel-font); /* Pixel font for inputs */
-    animation: rainbow-border 1.5s linear infinite; /* Constant rainbow border */
+    animation: rainbow-border 1.5s linear infinite, bounce 1.1s infinite; /* Constant rainbow border, now with bounce */
 }
 
 .input-2g-EW5:focus {
@@ -762,10 +777,10 @@ a:hover {
 
 .input-2g-EW5::placeholder {
     color: var(--muted-text-color) !important;
-    animation: flicker 0.3s infinite alternate;
+    animation: flicker 0.3s infinite alternate, bounce 1.4s infinite; /* Now with bounce */
 }
 
-/* --- Tooltips (Explosive Appearance) --- */
+/* --- Tooltips (Explosive Appearance, now with bounce) --- */
 .tooltip-2Qf-uE {
     background: linear-gradient(45deg, var(--tertiary-bg), var(--secondary-bg)) !important;
     color: var(--text-color) !important;
@@ -773,11 +788,11 @@ a:hover {
     padding: 10px 15px !important;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(var(--accent-color), 0.5);
     border: 2px solid var(--accent-color);
-    animation: fadeInScale 0.1s forwards, pulse-glow 2s infinite alternate; /* Rapid fade in, constant pulse */
+    animation: fadeInScale 0.1s forwards, pulse-glow 2s infinite alternate, bounce 1.6s infinite; /* Rapid fade in, constant pulse, now with bounce */
     font-family: var(--pixel-font);
 }
 
-/* --- DMs List (Animated & Reactive) --- */
+/* --- DMs List (Animated & Reactive, now with bounce) --- */
 .privateChannels-1nO1ee {
     background: var(--secondary-bg) !important;
 }
@@ -788,7 +803,7 @@ a:hover {
     margin: 2px 8px !important;
     padding: 6px 8px !important;
     transition: all 0.1s ease;
-    animation: flicker 0.7s infinite alternate;
+    animation: flicker 0.7s infinite alternate, bounce 1.5s infinite; /* Now with bounce */
 }
 
 .privateChannels-1nO1ee .channel-1S0KVS:hover {
@@ -833,7 +848,7 @@ a:hover {
     animation: glitch 0.2s infinite alternate;
 }
 
-/* --- Voice/Video Channels (Active & Pulsating) --- */
+/* --- Voice/Video Channels (Active & Pulsating, now with bounce) --- */
 .container-1_G9Qc.voice-1_G9Qc {
     background: var(--secondary-bg) !important;
     border-radius: 12px !important;
@@ -841,13 +856,13 @@ a:hover {
     padding: 12px !important;
     box-shadow: 0 3px 10px rgba(0,0,0,0.4);
     border: 2px solid var(--accent-color);
-    animation: pulse-glow 2s infinite alternate;
+    animation: pulse-glow 2s infinite alternate, bounce 1.8s infinite; /* Now with bounce */
 }
 
 .container-1_G9Qc.voice-1_G9Qc .name-1_G9Qc {
     color: var(--accent-color) !important;
     text-shadow: 0 0 10px rgba(var(--accent-color), 0.8);
-    animation: flicker 0.3s infinite alternate;
+    animation: flicker 0.3s infinite alternate, bounce 1.5s infinite; /* Now with bounce */
 }
 
 /* --- Mentions Popout (Explosive & Glitchy) --- */
@@ -859,7 +874,7 @@ a:hover {
     animation: fadeInScale 0.2s forwards, pulse-glow 3s infinite alternate, glitch 0.1s infinite alternate;
 }
 
-/* --- Search Bar (Interactive & Pulsating) --- */
+/* --- Search Bar (Interactive & Pulsating, now with bounce) --- */
 .searchBar-3Tn07V {
     background-color: #000000 !important; /* Pure black search bar */
     border-radius: 10px !important;
@@ -867,7 +882,7 @@ a:hover {
     color: var(--accent-color) !important;
     box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
     transition: all 0.1s ease;
-    animation: rainbow-border 1.8s linear infinite;
+    animation: rainbow-border 1.8s linear infinite, bounce 1.3s infinite; /* Now with bounce */
 }
 
 .searchBar-3Tn07V:focus-within {
@@ -883,10 +898,10 @@ a:hover {
 
 .searchBar-3Tn07V .placeholder-36uKxR {
     color: var(--muted-text-color) !important;
-    animation: flicker 0.4s infinite alternate;
+    animation: flicker 0.4s infinite alternate, bounce 1.4s infinite; /* Now with bounce */
 }
 
-/* --- Custom Status Input (Animated) --- */
+/* --- Custom Status Input (Animated, now with bounce) --- */
 .customStatus-18f_oE .input-2g-EW5 {
     background-color: #000000 !important;
     border: 3px solid var(--border-color) !important;
@@ -895,7 +910,7 @@ a:hover {
     box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
     transition: all 0.1s ease;
     font-family: var(--pixel-font);
-    animation: rainbow-border 1.5s linear infinite;
+    animation: rainbow-border 1.5s linear infinite, bounce 1.1s infinite; /* Now with bounce */
 }
 
 .customStatus-18f_oE .input-2g-EW5:focus {
@@ -904,17 +919,17 @@ a:hover {
     animation: pulse-glow 0.3s infinite alternate, glitch 0.1s infinite alternate;
 }
 
-/* --- General Text and Headers (Flickering & Glowing) --- */
+/* --- General Text and Headers (Flickering & Glowing, now with bounce) --- */
 h1, h2, h3, h4, h5, h6 {
     color: var(--text-color) !important;
     text-shadow: 2px 2px 10px rgba(0,0,0,0.8), 0 0 15px var(--accent-color); /* Stronger shadow and glow */
-    animation: flicker 0.8s infinite alternate;
+    animation: flicker 0.8s infinite alternate, bounce 1.8s infinite; /* Now with bounce */
 }
 
-/* Ensure all text is readable and animated */
+/* Ensure all text is readable and animated, now with bounce */
 .text-xs, .text-sm, .text-base, .text-lg, .text-xl, .text-2xl {
     color: var(--text-color) !important;
-    animation: flicker 0.6s infinite alternate;
+    animation: flicker 0.6s infinite alternate, bounce 1.7s infinite; /* Now with bounce */
 }
 
 /* --- Avatar and Status Indicators (Extreme Animation) --- */
@@ -951,6 +966,118 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.05s ease; /* Faster transition */
     animation: pulse-glow 0.2s infinite alternate, glitch 0.05s infinite alternate; /* Rapid pulse and glitch */
 }
+
+/* ===== Collapsible sidebars - lu9 (1354606015819022416) ===== */
+body:not(.side-expanded) {
+  [class^="sidebarList_"] {
+    position: fixed; /* Remove if you don't want it to float */
+    width: 150px; /* Set to 0px if you don't want it to float */
+    container-type: unset;
+    opacity: 0%;
+    height: 95%;
+    top: 38px;
+    z-index: 998;
+    left: -230px;
+    border: 1px solid var(--app-border-frame);
+    border-radius: var(--radius-md);
+    filter: drop-shadow(16px 16px 16px #0005) ;
+    transition-property: opacity, left, width;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  [class^="sidebar_"]:hover [class^="sidebarList_"] {
+    left: 75px;
+    opacity: 100%;
+    width: 300px; /* Set your preferred width here (resize handle is disabled) */
+  }
+
+  [class*="guilds"] {
+    z-index: 999; /* So the sidebar pops from behind the servers */
+  }
+
+  [class^="panels_"] {
+    position: fixed !important; /* Floating user panel (status, deafen, etc) */
+    width: 60px !important;
+    z-index: 999 !important;
+    transition: width .5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  [class^="panels_"]:hover {
+    width: 300px !important;
+    z-index: 9999 !important;
+  }
+
+
+  [class^="panels_"] [class^="container__"] [class^="buttons__"] {
+    opacity: 0%;
+    scale: 0%; /* Because the buttons can't stay inside the panel on chromium (any help is appreciated) */
+    transition-property: opacity, margin-bottom, scale;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .panels_c48ade:hover [class^="container__"] [class^="buttons__"] {
+
+    scale: 100%;
+    opacity: 100%;
+  }
+
+  [class^="sidebarResizeHandle_"] {
+    display: none; /* Set your preferred width in the sidebar settings */
+  }
+
+  [class^="container_"] [class^="membersWrap_"] {
+    position: fixed; /* Remove if you don't want it to float */
+    height: 100%;
+    opacity: 0%;
+    z-index: 999;
+    right: -250px;
+    /* top: 80px; Add/change this according to your desktop/client */
+    filter: drop-shadow(-16px -16px 16px #0005) ;
+    transition-property: right, opacity;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  [class^="container_"] [class^="membersWrap_"]:hover {
+    right: 0px;
+    opacity: 100%;
+  }
+
+  [class*='page_'] {
+    border: 1px solid var(--app-border-frame) !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+}
+
+/* ===== Completed borders - Me :3 (1355432251990741066) ===== */
+[class*='base_'] > [class*='content_'] {
+    margin: 0 10px 10px 0;
+
+    [class*='page_'] {
+        border: 1px solid var(--app-border-frame);
+        border-left: none;
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    [class*='sidebar_'] {
+        &::after {
+            display: none;
+        }
+
+        [class*='sidebarList_'] {
+            border-bottom: 1px solid var(--app-border-frame);
+            border-bottom-left-radius: var(--radius-md);
+        }
+    }
+
+    [class*='chat_'] {
+        border-top: none !important;
+    }
+}
+
 
 
 
