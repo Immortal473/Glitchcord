@@ -1,5 +1,5 @@
 /*
- * Vencord Discord Theme - "Hyper-Sensory Overload 2.0: Absolute Chaos (with Bounce, Collapsible Sidebars & Borders)"
+ * Vencord Discord Theme - "Hyper-Sensory Overload 2.0: Absolute Chaos (with Blurry Settings Modal)"
  *
  * This theme takes Azurite and ClearVision's fusion to an extreme,
  * introducing a completely new, vibrant, and highly animated aesthetic.
@@ -8,12 +8,15 @@
  *
  * This version features:
  * - IMPORT of ClearVision's main CSS.
+ * - NEW: IMPORT of BlurrySettingsModal.theme.css for a blurry settings modal.
  * - A high-contrast, neon-cyberpunk color palette.
  * - Every possible animation applied: rapid glows, shifting gradients,
  * aggressive transforms, glitch effects, pulsating backgrounds,
  * rainbow borders, and more.
- * - NEW: Subtle "bounce" animation applied to various text elements.
- * - NEW: Collapsible sidebars and refined border treatments.
+ * - Subtle "bounce" animation applied to various text elements.
+ * - Collapsible sidebars and refined border treatments.
+ * - Spotify player styling with blur on hover.
+ * - External import for "bubbles.css" for additional visual effects.
  * - Intensified visual feedback on hover, active, and focus states.
  * - Optimized for maximum visual impact, but may significantly impact performance.
  *
@@ -21,20 +24,25 @@
  * 1. Open Vencord settings in Discord.
  * 2. Navigate to the "Themes" section.
  * 3. Click "Open Themes Folder" (or similar, depending on Vencord version).
- * 4. Create a new `.css` file (e.g., `absolute-chaos-bounce-collapsible.css`) in that folder.
+ * 4. Create a new `.css` file (e.g., `absolute-chaos-full.css`) in that folder.
  * 5. Copy and paste this entire code into the new file.
  * 6. Save the file and enable the theme in Vencord settings.
  *
  * WARNING: This theme uses extremely extensive CSS animations and complex styles,
  * which WILL significantly impact performance and responsiveness, especially on
  * older or less powerful systems. The interaction with the imported ClearVision
- * CSS may also produce unexpected visual results, contributing to the "chaos."
- * Use at your own risk for a truly chaotic experience.
+ * CSS and other external imports may also produce unexpected visual results,
+ * contributing to the "chaos." Use at your own risk for a truly chaotic experience.
  * If performance is an issue, consider reverting to a less intense theme.
  */
 
 /* --- IMPORT ClearVision's Main CSS (as requested) --- */
 @import url("https://clearvision.github.io/ClearVision-v7/main.css");
+
+/* --- IMPORT Blurry Settings Modal (as requested) --- */
+@import url("https://nspc911.github.io/themes/vencord/BlurrySettingsModal.theme.css");
+/* Use only if the original snippet doesnt work
+@import url("https://nspc911.github.io/themes/vencord/SettingsModal.theme.css"); */
 
 /* --- Import Fonts (Still Azurite's Righteous, but with more flair) --- */
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
@@ -153,6 +161,10 @@
     --app-border-frame: #00FFFF; /* Example, adjust to your theme's primary border color */
     --radius-md: 8px; /* Example medium border radius */
 
+    /* Blurry Settings Modal variables */
+    --blrsm-blur-by: 5px;
+    --blrsm-dimmness: 25;
+
 
     /* --- Status Colors (Neon version) --- */
     --online-status-color: #00FF00; /* Neon Green */
@@ -204,7 +216,7 @@ body, #app-mount {
     display: var(--background-image, none) == 'none' ? none : block;
     pointer-events: none;
     /* Adding subtle static/noise effect */
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZmlsdGVyIGlkPSJub2lzZSI+CiAgICA8ZnJUdXJidWxlbmQgYmFzZUV5cGVuY3k9IjAuNiIgbnVtT2N0YXZlcz0iMiIgc3RpdGNoVGlsZXM9Im5vU3RpdGNoIi8+CiAgPC9maWx0ZXI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC4xIi8+Cjwvc3ZnPg==');
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZmlsdGVyIGlkPSJub2lzZSI+CiAgICA8ZnJUdXJidWlsZW5kIGJhc2VFeXBlbmN5PSIwLjYiIG51bU9jdGF2ZXM9IjIiIHN0aXRjaFRpbGVzPSJub1N0aXRjaCIvPgogIDwvZmlsdGVyPgogIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=');
     background-size: 100px 100px; /* Adjust size for finer/coarser noise */
     animation: noise-animation 0.5s steps(2) infinite alternate; /* Fast noise animation */
 }
@@ -1034,7 +1046,7 @@ body:not(.side-expanded) {
     z-index: 999;
     right: -250px;
     /* top: 80px; Add/change this according to your desktop/client */
-    filter: drop-shadow(-16px -16px 16px #0005) ;
+    filter: drop_shadow(-16px -16px 16px #0005) ;
     transition-property: right, opacity;
     transition-duration: .5s;
     transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -1077,6 +1089,65 @@ body:not(.side-expanded) {
         border-top: none !important;
     }
 }
+
+/* ===== Spotify Player - Vencord Addon Integration ===== */
+#vc-spotify-player {
+    --blur-amount: 4px;
+    --normal-bg-colour: var(--bg-overlay-floating, var(--background-base-low, var(--background-secondary-alt)));
+
+    position: relative;
+    background: linear-gradient(to bottom, transparent 0%, var(--normal-bg-colour) 100%) !important;
+    overflow: hidden;
+    transition: all 0.4s ease-out;
+    > * {
+      filter: drop-shadow(0 0 10px var(--normal-bg-colour));
+    }
+}
+#vc-spotify-player:hover {
+    --blur-amount: 0px;
+}
+#vc-spotify-player::before,
+#vc-spotify-player::after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    transition: all 0.4s ease-out;
+}
+#vc-spotify-player::before {
+    background: var(--vc-spotify-track-image);
+    background-position: center top;
+    background-size: cover;
+    opacity: 0.5;
+}
+#vc-spotify-player:hover::before {
+    opacity: 0.7;
+}
+#vc-spotify-player::after {
+    backdrop-filter: blur(var(--blur-amount));
+}
+#vc-spotify-progress-bar > [class^="slider_"] > [class^="bar_"] > [class^="barFill_"] {
+    background-color: white !important;
+    background: var(--vc-spotify-track-image);
+    background-size: 1px 100%;
+}
+#vc-spotify-progress-bar > [class^="slider_"] > [class^="bar_"] > [class^="barFill_"]::before {
+    content: "";
+    position: fixed;
+    height: inherit;
+    width: inherit;
+    top: inherit;
+    left: inherit;
+    border-radius: 4px 0 0 4px;
+    backdrop-filter: blur(10px) saturate(4) brightness(1.6);
+}
+
+/* ===== External Import - Bubbles.css ===== */
+@import url(https://blade04208.github.io/ddex4/src/bubbles.css);
+
 
 
 
